@@ -9,7 +9,11 @@ var routes = require('./routes/index');
 //导入数据库配置
 var settings = require('./settings');
 
+var session = require('express-session');
+var MongoStore = requie('connect-mongo')(session);
+
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +26,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//设置中间件
+app.use(session({
+    secret: settings.cookieSecrect,
+    key: settings.db, //cookie name
+    cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+    store: new MongoStore({
+        url: 'mongodb://localhost/nodeblog'
+    })
+}));
 
 
 //设置路由.
