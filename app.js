@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+//导入数据库配置
+var settings = require('./settings');
 
 var app = express();
 
