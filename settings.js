@@ -3,7 +3,7 @@
  * */
 
 module.exports = {
-    cookieSecrect: 'NodeBlog',
+    cookieSecret: 'NodeBlog',
     db: 'nodeblog',
     host: 'localhost',
     port: 27017

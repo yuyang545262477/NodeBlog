@@ -21,25 +21,27 @@ User.prototype.save = function (callback) {
 //    打开数据库
     mongodb.open(function (err, db) {
         if (err) {
+            console.log("打开数据库失败");
             return callback(err);
         }
         db.collection('users', function (err, collection) {
             if (err) {
                 mongodb.close();
+                console.log("进入users失败");
                 return callback(err);
             }
-            collection.insert('user', {
+            collection.insert(user, {
                 safe: true
             }, function (err, user) {
                 mongodb.close();
                 if (err) {
+                    console.log("写入数据失败");
                     return callback(err);
                 }
                 callback(null, user[0]);
-            })
-
-        })
-    })
+            });
+        });
+    });
 };
 
 
@@ -47,11 +49,13 @@ User.prototype.save = function (callback) {
 User.get = function (name, callback) {
     mongodb.open(function (err, db) {
         if (err) {
+            console.log("打开数据库失败");
             return callback(err);
         }
-        db.collection('users', function (err, user) {
+        db.collection('users', function (err, collection) {
             if (err) {
                 mongodb.close();
+                console.log("打开users失败");
                 return callback(err);
             }
             collection.findOne({
@@ -59,6 +63,7 @@ User.get = function (name, callback) {
             }, function (err, user) {
                 mongodb.close();
                 if (err) {
+                    console.log("查询失败");
                     return callback(err);
                 }
                 return callback(null, user);
@@ -67,3 +72,7 @@ User.get = function (name, callback) {
 
     })
 };
+
+
+
+
