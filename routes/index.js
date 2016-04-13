@@ -11,7 +11,7 @@ function routes(app) {
     app.get('/reg', function (req, res) {
         res.render('reg', {title: '注册页面'})
     });
-    app.poster('/reg', function (req, res) {
+    app.post('/reg', function (req, res) {
 
     });
     //文章发表页面
