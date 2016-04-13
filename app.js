@@ -36,7 +36,7 @@ app.use(session({
     key: settings.db, //cookie name
     cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
     store: new MongoStore({
-        url:'mongodb://localhost/data/db'
+        url: 'mongodb://localhost/data/db'
     })
 }));
 

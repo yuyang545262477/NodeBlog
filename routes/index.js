@@ -24,10 +24,10 @@ function routes(app) {
         }
         //生成密码的 md5 值
         var md5 = crypto.createHash('md5'),
-            password_md5 = md5.update(req.body.password).digest('hex');
+            password = md5.update(req.body.password).digest('hex');
         var newUser = new User({
             name: name,
-            password: password_md5,
+            password: password,
             email: req.body.email
         });
         //检查用户名是否已经存在 
