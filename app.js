@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 //导入数据库配置
 var settings = require('./settings');
+//导入页面通知模块
+var flash = require('connect-flash');
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -26,6 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 
 //设置中间件
 app.use(session({
@@ -33,7 +36,7 @@ app.use(session({
     key: settings.db, //cookie name
     cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
     store: new MongoStore({
-        url: 'mongodb://localhost/nodeblog'
+        url:'mongodb://localhost/data/db'
     })
 }));
 
