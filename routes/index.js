@@ -19,6 +19,7 @@ function routes(app) {
 
 
     //注册页面
+    app.get('/reg', checkUnLogin);
     app.get('/reg', function (req, res) {
         res.render('reg', {
             title: '注册页面',
@@ -27,6 +28,7 @@ function routes(app) {
             error: req.flash('error').toString()
         })
     });
+    app.post('/reg', checkUnLogin);
     app.post('/reg', function (req, res) {
         var name = req.body.name,
             password = req.body.password,
@@ -69,14 +71,19 @@ function routes(app) {
             });
         });
     });
+
+
     //文章发表页面
+    app.get('/post', checkLogin);
     app.get('/post', function (req, res) {
         res.render('post', {title: '文章发表页面'})
     });
+    app.post('/post', checkLogin);
     app.post('/post', function (req, res) {
 
     });
     //登录页面
+    app.get('/login', checkUnLogin);
     app.get('/login', function (req, res) {
         res.render('login',
             {
@@ -86,6 +93,8 @@ function routes(app) {
                 error: req.flash('error').toString()
             });
     });
+
+    app.post('/login', checkUnLogin);
     app.post('/login', function (req, res) {
         //    首先对密码进行md5处理
         var md5 = crypto.createHash('md5'),
@@ -116,6 +125,23 @@ function routes(app) {
         res.redirect('/');
     });
 
+
+//  通过两个函数,来判断状态.
+    function checkLogin(reg, res, next) {
+        if (!reg.session.user) {
+            reg.flash('error', "当前用户未登录");
+            res.redirect('/');
+        }
+        next();
+    }
+
+    function checkUnLogin(reg, res, next) {
+        if (reg.session.user) {
+            reg.flash('error', "当前用户已经登录");
+            res.redirect('/');
+        }
+        next();
+    }
 }
 
 
