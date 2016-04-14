@@ -1,4 +1,3 @@
 # 使用express 搭建
 ----
-
-## express-generator 命令行
+#在注册走通之后,完成,页面的访问权限

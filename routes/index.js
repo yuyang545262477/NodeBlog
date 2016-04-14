@@ -5,13 +5,27 @@ var crypto = require('crypto'),
     User = require('../models/user.js');
 
 function routes(app) {
+
+
     //首页
     app.get('/', function (req, res) {
-        res.render('index', {title: '主页'});
+        res.render('index', {
+            title: '主页',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
     });
+
+
     //注册页面
     app.get('/reg', function (req, res) {
-        res.render('reg', {title: '注册页面'})
+        res.render('reg', {
+            title: '注册页面',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        })
     });
     app.post('/reg', function (req, res) {
         var name = req.body.name,
@@ -71,7 +85,9 @@ function routes(app) {
     });
 //    登出页面
     app.get('/logout', function (req, res) {
-
+        req.session.user = null;
+        req.flash('success','登出成功');
+        res.redirect('/');
     });
 
 }
