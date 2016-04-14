@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
+app.use(flash());
 
 //设置中间件
 app.use(session({
