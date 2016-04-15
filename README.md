@@ -8,5 +8,6 @@
     $   DEBUG=NodeBlog:* npm start  //之后,就可以通过 npm start 开启服务.
     
     
-    
-2.  到目前为止.初始化结束.    
+2.优化路由,集中管理.
+
+    详情看commit 记录.
