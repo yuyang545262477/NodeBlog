@@ -1,2 +1,8 @@
-<h1><%= title %></h1>
-<p>welcome <%= title %></p>
+<%- include header.ejs %>
+<form method="post">
+    标题: <input type="text" name="title">
+    内容:<textarea name="post" cols="100" rows="10"></textarea>
+    <input type="submit" value="提交内容">
+</form>
+<%- include footer.ejs %>
+

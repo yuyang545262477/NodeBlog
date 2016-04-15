@@ -2,7 +2,9 @@
  * 这里的型参,假设就是express的实例,事实上,也是.
  * */
 var crypto = require('crypto'),
-    User = require('../models/user.js');
+    Post = require('../models/post'),
+    User = require('../models/user');
+
 
 function routes(app) {
 
@@ -76,10 +78,28 @@ function routes(app) {
     //文章发表页面
     app.get('/post', checkLogin);
     app.get('/post', function (req, res) {
-        res.render('post', {title: '文章发表页面'})
+        res.render('post', {
+            title: '文章发表页面',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
     });
     app.post('/post', checkLogin);
     app.post('/post', function (req, res) {
+        //    得到当前的session iD
+        var currentID = req.session.user;
+        //    创建实例
+        var post = new Post(currentID.name, req.body.title, req.body.post);
+        //    进行保存
+        post.save(function (err) {
+            if (err) {
+                req.flash('error', '保存错误');
+                res.redirect('/');
+            }
+            req.flash('success', '保存正确');
+            res.redirect('/');
+        });
 
     });
     //登录页面

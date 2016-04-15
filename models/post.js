@@ -45,7 +45,7 @@ Post.prototype.save = function (callback) {
                 mongodb.close();
                 return callback(err);
             }
-            collection.insert(Post, {safe: true}, function (err) {
+            collection.insert(post, {safe: true}, function (err) {
                 mongodb.close();
                 if (err) {
                     return callback(err);
@@ -78,7 +78,7 @@ Post.get = function (name, callback) {
                 mongodb.close();
                 if (err) {
                     return callback(err);
-                }   
+                }
                 return callback(null, doc);
             });
         });
