@@ -11,11 +11,23 @@ function routes(app) {
 
     //首页
     app.get('/', function (req, res) {
-        res.render('index', {
-            title: '主页',
-            user: req.session.user,
-            success: req.flash('success').toString(),
-            error: req.flash('error').toString()
+        // res.render('index', {
+        //     title: '主页',
+        //     user: req.session.user,
+        //     success: req.flash('success').toString(),
+        //     error: req.flash('error').toString()
+        // });
+        Post.get(null, function (err, docs) {
+            if (err) {
+                docs = [];
+            }
+            res.render('index', {
+                title: '主页',
+                docs: docs,
+                user:req.session.user,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            });
         });
     });
 

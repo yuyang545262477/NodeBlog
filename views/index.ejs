@@ -1,3 +1,12 @@
 <%- include header.ejs %>
-这是主页
+<% docs.forEach(function (doc) { %>
+<p><h2><a href="#"><%= doc.title %></a></h2></p>
+<p class="info">
+    作者:<%= doc.name %>
+    日期:<%= doc.time %>
+</p>
+<p>
+    <%= doc.post %>
+</p>
+<% }) %>
 <%- include footer.ejs %>
