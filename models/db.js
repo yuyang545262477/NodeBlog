@@ -8,7 +8,7 @@ var settings = require('../settings'),
     Serve = require('mongodb').Server;
 
 
-modules.exports = new Db(settings.db, new Serve(settings.host, settings.port),{safe:true});
+module.exports = new Db(settings.db, new Serve(settings.host, settings.port), {safe: true});
 
 
 

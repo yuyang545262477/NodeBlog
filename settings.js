@@ -11,4 +11,4 @@ var settings = {
 
 };
 
-modules.exports = settings;
+module.exports = settings;

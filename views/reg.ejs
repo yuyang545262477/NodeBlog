@@ -1,2 +1,10 @@
-<h1><%= title %></h1>
-<p>welcome to <%= title %></p>
+<%- include header.ejs %>
+<form action="" method="post">
+    用户名: <input type="text" name="name" required>
+    密码: <input type="password" name="password" required>
+    确认密码: <input type="password" name="password-repeat" required>
+    邮箱: <input type="email" name="email" required>
+    <input type="submit" value="提交注册">
+</form>
+
+<%- include footer.ejs %>
