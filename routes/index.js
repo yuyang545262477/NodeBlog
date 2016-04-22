@@ -3,21 +3,25 @@ var crypto = require('crypto');
 var User = require('../models/users');
 
 
-function title(title,req) {
-    this.title = title;
-    this.user = req.session.user;
-    this.success = req.flash('success').toString();
-    this.error = req.flash('error').toString();
-}
 function routes(app) {
     app.get('/', function (req, res) {
-        res.render('index', title('index',req));
+        res.render('index',
+            {
+                title: '主页',
+                user: req.session.user,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            }
+        );
     });
     app.get('/reg', function (req, res) {
-        res.render('reg', title('register',req));
+        res.render('reg', {
+            title: '注册',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
     });
-
-
     app.post('/reg', function (req, res) {
         //step one:    get datas from font-end
         var name = req.body.name,
@@ -54,7 +58,7 @@ function routes(app) {
                     req.flash('error', err);
                     return res.redirect('/reg');
                 }
-                req.session.user = user;
+                req.session.user = newUser;
                 req.flash('success', 'succesing add');
                 return res.redirect('/');
             });
@@ -62,9 +66,33 @@ function routes(app) {
 
     });
 
+
     app.get('/login', function (req, res) {
-        res.render('login', title('login',req));
+        res.render('login', {
+            title: '主页',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
     });
+    app.post('/login', function (req, res) {
+        /*
+         * 1.get dataes form font-end
+         * 2.open mongodb
+         * 3.check password
+         * 4.check users
+         * 5.change session.user
+         * 6.redirect('/')
+         * */
+        //    get dataes form font-end
+        var name = req.body.name,
+            password = req.body.password;
+        console.log(name, password);
+
+
+    });
+
+
     app.get('/post', function (req, res) {
         res.render('post', {title: 'post'});
     });
@@ -73,7 +101,14 @@ function routes(app) {
     });
 
 
-    app.get('/logout', function (reg, res) {
+    app.get('/logout', function (req, res) {
+        /*
+         * 1.null req.session.user
+         * 2.res.redirect('/')
+         * */
+        req.session.user = null;
+        res.redirect('/');
+        
     })
 
 }
