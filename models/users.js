@@ -1,11 +1,10 @@
-var mognodb = require('./db');
+var mongodb = require('./db');
 
 
 function User(user) {
     this.name = user.name;
     this.password = user.password;
     this.email = user.email;
-
 }
 
 module.exports = User;
@@ -20,7 +19,7 @@ User.prototype.save = function (callback) {
         email: this.email
     };
 //    open mongodb
-    mognodb.open(function (err, db) {
+    mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
         }

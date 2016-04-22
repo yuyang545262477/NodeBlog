@@ -8,7 +8,6 @@ var settings = {
     db: 'blog2', //数据库名称
     host: 'localhost',
     port: 27017  //端口号
-
 };
 
 module.exports = settings;

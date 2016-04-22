@@ -24,7 +24,7 @@ app.use(session({
     key: settings.db,
     cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30days
     store: new MongoStore({
-        url: 'mongodb://localhost/blog'
+        url: 'mongodb://localhost/blog2'
     })
 }));
 app.use(flash());
