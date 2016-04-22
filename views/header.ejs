@@ -7,7 +7,11 @@
 </head>
 <body>
 <header>
-    <h1><%= title %></h1>
+    <h1><%= title %>
+        <% if(user){ %>
+        <b>user:<%= user.name %></b>
+        <% } %>
+    </h1>
 </header>
 
 <nav>
@@ -26,4 +30,4 @@
     <% } %>
     <% if (error) { %>
     <div><%= error %></div>
-    <% } %>
+<% } %>
