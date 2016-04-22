@@ -11,7 +11,8 @@ var settings = require('./settings');
 //引入客户端识别的中间件.
 var session = require("express-session");
 var MongoStore = require('connect-mongo')(session);
-
+//引入通知功能.
+var flash = require('connect-flash');
 
 var app = express();
 
@@ -26,10 +27,7 @@ app.use(session({
         url: 'mongodb://localhost/blog'
     })
 }));
-
-
-
-
+app.use(flash());
 
 
 // view engine setup

@@ -5,6 +5,9 @@ function routes(app) {
     app.get('/reg', function (req, res) {
         res.render('reg', {title: 'register'});
     });
+    app.post('/reg', function (reg, res) {
+        
+    });
 
     app.get('/login', function (req, res) {
         res.render('login', {title: 'login'});
@@ -12,6 +15,11 @@ function routes(app) {
     app.get('/post', function (req, res) {
         res.render('post', {title: 'post'});
     });
+    app.post('/post', function (req, res) {
+        res.render('post', {title: 'post'});
+    });
+
+
     app.get('/logout', function (reg, res) {
     })
 
