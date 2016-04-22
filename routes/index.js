@@ -3,12 +3,18 @@ var crypto = require('crypto');
 var User = require('../models/users');
 
 
+function title(title,req) {
+    this.title = title;
+    this.user = req.session.user;
+    this.success = req.flash('success').toString();
+    this.error = req.flash('error').toString();
+}
 function routes(app) {
     app.get('/', function (req, res) {
-        res.render('index', {title: 'index'});
+        res.render('index', title('index',req));
     });
     app.get('/reg', function (req, res) {
-        res.render('reg', {title: 'register'});
+        res.render('reg', title('register',req));
     });
 
 
@@ -57,7 +63,7 @@ function routes(app) {
     });
 
     app.get('/login', function (req, res) {
-        res.render('login', {title: 'login'});
+        res.render('login', title('login',req));
     });
     app.get('/post', function (req, res) {
         res.render('post', {title: 'post'});
