@@ -46,7 +46,7 @@ User.prototype.save = function (callback) {
 
 // reading user information
 
-User.get = function (name, callback) {
+User.prototype.get = function (name, callback) {
 //    open db
     mongodb.open(function (err, db) {
         if (err) {

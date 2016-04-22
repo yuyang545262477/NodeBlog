@@ -26,7 +26,7 @@ function routes(app) {
         //step one:    get datas from font-end
         var name = req.body.name,
             password = req.body.password,
-            password_re = req.body['password_repeat'],
+            password_re = req.body.password_repeat,
             email = req.body.email;
         //step two:    judge password
         if (password != password_re) {
@@ -43,7 +43,7 @@ function routes(app) {
             email: email
         });
         //    step five:    check newUser name;
-        User.get(newUser.name, function (err, user) {
+        newUser.get(newUser.name, function (err, user) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/reg');
@@ -78,6 +78,7 @@ function routes(app) {
     app.post('/login', function (req, res) {
         /*
          * 1.get dataes form font-end
+         * 1.1  password to md5
          * 2.open mongodb
          * 3.check password
          * 4.check users
@@ -87,7 +88,24 @@ function routes(app) {
         //    get dataes form font-end
         var name = req.body.name,
             password = req.body.password;
-        console.log(name, password);
+        //     md5 password
+        var md5 = crypto.createHash('md5'),
+            password_md5 = md5.update(password).digest('hex');
+        //    open mongodb
+        var newLogin = new User({
+            name: name,
+            password: password_md5
+        });
+        newLogin.get(name, function (err, user) {
+            if (err && !user) {
+                req.flash('error', error);
+                return res.redirect('/login');
+            }
+            req.session.user = user;
+            req.flash('success', 'login success');
+            return res.redirect('/');
+
+        })
 
 
     });
@@ -106,9 +124,10 @@ function routes(app) {
          * 1.null req.session.user
          * 2.res.redirect('/')
          * */
-        req.session.user = null;
+        req.flash("success",req.session.user.name+"   loginout successing");
+        setTimeout(req.session.user = null,1000);
         res.redirect('/');
-        
+
     })
 
 }
