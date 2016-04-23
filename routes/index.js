@@ -4,6 +4,16 @@ var User = require('../models/users');
 
 
 function routes(app) {
+    /*
+     * 1. index
+     * 2.regist
+     * 3.login
+     * 4.post
+     * 5.logout
+     * */
+
+
+    //1.    index
     app.get('/', function (req, res) {
         res.render('index',
             {
@@ -14,6 +24,9 @@ function routes(app) {
             }
         );
     });
+
+    //2.    regist
+    app.get('/reg', checkUnlogin);
     app.get('/reg', function (req, res) {
         res.render('reg', {
             title: '注册',
@@ -66,7 +79,8 @@ function routes(app) {
 
     });
 
-
+    //3.    login
+    app.get('/login', checkUnlogin);
     app.get('/login', function (req, res) {
         res.render('login', {
             title: '主页',
@@ -110,7 +124,8 @@ function routes(app) {
 
     });
 
-
+    //4.    post
+    app.get('/post', checkLogin);
     app.get('/post', function (req, res) {
         res.render('post', {title: 'post'});
     });
@@ -118,18 +133,38 @@ function routes(app) {
         res.render('post', {title: 'post'});
     });
 
-
+    //5.    logout
+    app.get('/logout', checkLogin);
     app.get('/logout', function (req, res) {
         /*
          * 1.null req.session.user
          * 2.res.redirect('/')
          * */
-        req.flash("success",req.session.user.name+"   loginout successing");
-        setTimeout(req.session.user = null,1000);
+        req.flash("success", req.session.user.name + "   loginout successing");
+        setTimeout(req.session.user = null, 1000);
         res.redirect('/');
 
     })
 
+}
+
+// ensure logging
+function checkLogin(req, res, next) {
+    if (!req.session.user) {
+        req.flash('error', '用户未登录');
+        res.redirect('/');
+    }
+    next();
+}
+
+//ensure unlogging
+
+function checkUnlogin(req, res, next) {
+    if (req.session.user) {
+        req.flash("error", '用户已经登录');
+        res.redirect('/');
+    }
+    next();
 }
 
 
