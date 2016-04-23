@@ -127,7 +127,14 @@ function routes(app) {
     //4.    post
     app.get('/post', checkLogin);
     app.get('/post', function (req, res) {
-        res.render('post', {title: 'post'});
+        res.render('post',
+            {
+                title: 'post',
+                user: req.session.user,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            }
+        );
     });
     app.post('/post', function (req, res) {
         res.render('post', {title: 'post'});
@@ -152,7 +159,7 @@ function routes(app) {
 function checkLogin(req, res, next) {
     if (!req.session.user) {
         req.flash('error', '用户未登录');
-        res.redirect('/');
+        res.redirect('/login');
     }
     next();
 }
@@ -162,7 +169,7 @@ function checkLogin(req, res, next) {
 function checkUnlogin(req, res, next) {
     if (req.session.user) {
         req.flash("error", '用户已经登录');
-        res.redirect('/');
+        res.redirect('back');
     }
     next();
 }
