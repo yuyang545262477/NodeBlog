@@ -61,7 +61,7 @@ Post.prototype.save = function (callback) {
 };
 //5.    pototype.get
 
-Post.prototype.get = function (name, callback) {
+Post.get = function (name, callback) {
 //    open mongodb
     mongodb.open(function (err, db) {
         if (err) {
