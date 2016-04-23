@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 
 var User = require('../models/users');
+var Post = require('../models/post');
 
 
 function routes(app) {
@@ -137,7 +138,27 @@ function routes(app) {
         );
     });
     app.post('/post', function (req, res) {
-        res.render('post', {title: 'post'});
+        /*
+         * 1.get data from front-end
+         * 2.initial Post
+         * 
+         * 
+         * */
+        var title = req.body.title,
+            content = req.body.content;
+
+
+        var post = new Post(req.session.user.name, title, content);
+        post.save(function (err) {
+            if (err) {
+                req.flash('error', 'save error');
+                res.redirect('/post');
+            }
+            req.flash("success", 'save success');
+            res.redirect('/');
+        })
+
+
     });
 
     //5.    logout
