@@ -1,15 +1,24 @@
 var crypto = require('crypto'),
+    Post = require('../models/post'),
     User = require('../models/user');
 
 
 module.exports = function (app) {
     app.get('/', function (req, res) {
-        res.render('index', {
-            title: '主页',
-            user: req.session.user,
-            success: req.flash('success').toString(),
-            error: req.flash('error').toString()
-        });
+        Post.get(null, function (err, docs) {
+            if (err) {
+                docs = [];
+                req.flash('error', '获取文章失败');
+            }
+            res.render('index', {
+                title: '主页',
+                user: req.session.user,
+                posts: docs,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            })
+        })
+        
     });
     
     
@@ -109,7 +118,28 @@ module.exports = function (app) {
     
     app.get('/post', Logined);
     app.get('/post', function (req, res) {
-        res.render('post', {title: 'post'});
+        res.render('post', {
+            title: 'post',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
+    });
+    app.post('/post', function (req, res) {
+        var name = req.session.user.name,
+            title = req.body.title,
+            article = req.body.article,
+            post = new Post(name, title, article);
+        
+        post.save(function (err) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('/');
+            }
+            req.flash('success', '发布成功');
+            return res.redirect('/');
+        })
+        
     });
     
     

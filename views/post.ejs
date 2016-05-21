@@ -1,10 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><%= title %></title>
-</head>
-<body>
-hello <%= title %>
-</body>
-</html>
+<%- include header.ejs %>
+<form action="" method="post">
+    标题: <input type="text" name="title"><br/>
+    内容: <textarea name="article" rows="20" cols="100"></textarea><br>
+    <input type="submit" value="发表">
+</form>
+<%- include footer.ejs %>
